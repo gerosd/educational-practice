@@ -24,23 +24,27 @@
     justify-content: space-between;
     background: $background;
     position: relative;
-}
 
-#root::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 484px;
-    height: 431px;
-    background-image: url("../react.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    opacity: 0.4;
-    transform-origin: center;
-    animation: logo-spin 15s linear infinite;
+    &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 484px;
+        aspect-ratio: 484 / 431;
+        background-image: url("../react.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        opacity: 0.4;
+        transform-origin: center;
+        animation: logo-spin 15s linear infinite;
+
+        @media (max-width: 1024px) {
+            width: 300px;
+        }
+    }
 }
 
 header, footer {
@@ -50,6 +54,7 @@ header, footer {
 
 .main {
     width: 1000px;
+    margin-top: 60px;
     z-index: 1;
 
     @media (max-width: 1024px) {
@@ -61,7 +66,7 @@ header, footer {
     }
 }
 
-p, h1, h2, h3, a, button {
+p, h1, h2, h3, a, button, ul, ol {
     color: #fff;
     font-family: 'Trebuchet MS', sans-serif;
     letter-spacing: 0.64px;
@@ -75,6 +80,7 @@ a {
 button {
     background: $accent;
     border: none;
+    border-radius: 5px;
     outline: none;
     cursor: pointer;
     transition: 0.2s ease;

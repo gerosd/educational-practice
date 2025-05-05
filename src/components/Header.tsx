@@ -2,7 +2,7 @@ import React from 'react';
 import styles from "./Header.module.scss";
 import {Link} from "react-router-dom";
 
-function Header() {
+function Header(): React.ReactElement  {
     return (
         <header className={styles.header}>
             <Link to="/tests">Тесты</Link>

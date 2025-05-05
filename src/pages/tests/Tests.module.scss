@@ -1,0 +1,55 @@
+@use "../../assets/styles/_variables.scss" as *;
+
+.tests {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-block: 60px;
+
+    .tests__title {
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+        margin-top: 60px;
+
+        .test {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-inline: 14px;
+            width: 100%;
+            height: 60px;
+            background: $interactive;
+            user-select: none;
+            cursor: pointer;
+            transition: 0.2s ease;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+
+            .completed {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: #ffffff;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .name {
+                font-size: 22px;
+            }
+        }
+    }
+}

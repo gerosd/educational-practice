@@ -1,0 +1,25 @@
+@use "../../assets/styles/_variables.scss" as *;
+
+.certification {
+
+    .desc {
+        font-size: 24px;
+        text-align: justify;
+    }
+
+    .quizCard {
+
+        .progressBar {
+            background: $gray;
+
+            .progressThumb {
+                background: $accent;
+            }
+        }
+
+        .quizCount, .quizName {
+            font-size: 22px;
+            font-weight: 500
+        }
+    }
+}
