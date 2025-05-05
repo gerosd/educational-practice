@@ -1,0 +1,23 @@
+@use "../../assets/styles/_variables.scss" as *;
+
+.notFound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1 {
+        font-size: 42px;
+    }
+
+    p {
+        padding-top: 5px;
+        font-size: 20px;
+    }
+
+    button {
+        margin-top: 15px;
+        padding: 16px 50px;
+        border-radius: 5px;
+        font-size: 24px;
+    }
+}

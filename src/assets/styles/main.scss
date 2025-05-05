@@ -1,0 +1,85 @@
+@use "_variables.scss" as *;
+
+@keyframes logo-spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg) ;
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: space-between;
+    background: $background;
+    position: relative;
+}
+
+#root::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 484px;
+    height: 431px;
+    background-image: url("../react.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.4;
+    transform-origin: center;
+    animation: logo-spin 15s linear infinite;
+}
+
+header, footer {
+    background: $black;
+    width: 100%;
+}
+
+.main {
+    width: 1000px;
+    z-index: 1;
+
+    @media (max-width: 1024px) {
+        width: 750px;
+    }
+
+    @media (max-width: 768px) {
+        width: 350px;
+    }
+}
+
+p, h1, h2, h3, a, button {
+    color: #fff;
+    font-family: 'Trebuchet MS', sans-serif;
+    letter-spacing: 0.64px;
+}
+
+a {
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+button {
+    background: $accent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    &:hover {
+        background: #7a438d;
+    }
+}
