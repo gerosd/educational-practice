@@ -1,5 +1,6 @@
 import React from 'react';
 import complete from "../../assets/complete.svg";
+import {Link} from "react-router-dom";
 
 interface TestsContainerProps {
     styles: Record<string, string>;
@@ -11,7 +12,7 @@ interface TestInterface {
     isCompleted: boolean;
 }
 
-const TestsStorage: TestInterface[] = [
+const testsStorage: TestInterface[] = [
     {id: 1, name: "Что такое React? JSX, отличие от HTML", isCompleted: false},
     {id: 2, name: "Компоненты и Props", isCompleted: false},
     {id: 3, name: "Состояние компонента", isCompleted: false},
@@ -29,13 +30,13 @@ function TestsContainer( {styles}: TestsContainerProps ): React.ReactElement {
     return (
         <div className={styles.container}>
             {
-                TestsStorage.map(test => (
-                    <div className={styles.test} key={test.id}>
+                testsStorage.map(test => (
+                    <Link className={styles.test} key={test.id} to={`/test/${test.id}`}>
                         <div className={styles.completed}>
                             {test.isCompleted ? <img src={complete} alt="complete"/> : null}
                         </div>
                         <p className={styles.name}>{test.name}</p>
-                    </div>
+                    </Link>
                 ))
             }
         </div>

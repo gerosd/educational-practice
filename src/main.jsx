@@ -8,6 +8,7 @@ import Footer from "./components/Footer.tsx";
 import PageNotFound from "./pages/pagesNotFound/PageNotFound.tsx";
 import Tests from "./pages/tests/Tests.tsx";
 import "./assets/styles/main.scss";
+import TestPage from "./pages/tests/TestPage.tsx";
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')).render(
             <Routes>
                 <Route path="/" element={<Index/>}/>
                 <Route path="/tests" element={<Tests/>}/>
+                <Route path="/test/:testId" element={<TestPage/>}/>
                 <Route path="certification" element={<Certification/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>

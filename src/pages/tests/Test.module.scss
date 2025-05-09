@@ -1,0 +1,50 @@
+@use "../../assets/styles/_variables.scss" as *;
+
+.testPage {
+    display: flex;
+    flex-direction: column;
+    height: 800px;
+    width: 1500px;
+
+    .testHeader {
+
+        .completedBadge {
+
+        }
+    }
+
+    .testContent {
+        display: flex;
+        height: 100%;
+        width: 100%;
+
+        .descriptionColumn {
+
+        }
+
+        .editorColumn {
+            display: flex;
+            flex-direction: column;
+            height: 50%;
+
+            .buttons {
+
+                .disabled {
+
+                }
+            }
+
+            .output {
+
+            }
+
+            .preview {
+
+
+                .previewFrame {
+
+                }
+            }
+        }
+    }
+}
