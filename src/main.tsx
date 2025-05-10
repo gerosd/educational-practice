@@ -1,16 +1,21 @@
 import React, {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Index from './pages/index/index.tsx'
-import Certification from "./pages/certification/Certification.tsx";
-import Header from "./components/Header.tsx";
-import Footer from "./components/Footer.tsx";
-import PageNotFound from "./pages/pagesNotFound/PageNotFound.tsx";
-import Tests from "./pages/tests/Tests.tsx";
+import Index from './pages/index/index'
+import Certification from "./pages/certification/Certification";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import PageNotFound from "./pages/pagesNotFound/PageNotFound";
+import Tests from "./pages/tests/Tests";
 import "./assets/styles/main.scss";
-import TestPage from "./pages/tests/TestPage.tsx";
+import {TestPage} from "./pages/tests/test/TestPage";
 
-createRoot(document.getElementById('root')).render(
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Failed to find the root element');
+
+const root = createRoot(rootElement);
+
+root.render(
     <StrictMode>
         <BrowserRouter>
             <Header/>

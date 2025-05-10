@@ -2,9 +2,10 @@ import React, {FC} from 'react';
 
 interface TestDescriptionProps {
     testId: number;
+    styles: Record<string, string>;
 }
 
-const TestDescription: FC<TestDescriptionProps> = ({ testId }) => {
+const TestDescription: FC<TestDescriptionProps> = ({ testId, styles }) => {
     const testDescriptions: Record<number, { description: string; task: string }> = {
         1: {
             description: 'В этом тесте вы познакомитесь с основами React и JSX.',
@@ -24,7 +25,7 @@ const TestDescription: FC<TestDescriptionProps> = ({ testId }) => {
     }
 
     return (
-        <div className="test-description">
+        <div className={`${styles.testDescription}`}>
             <h2>Описание</h2>
             <p>{currentTest.description}</p>
 

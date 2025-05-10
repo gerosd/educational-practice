@@ -7,43 +7,48 @@
     width: 1500px;
 
     .testHeader {
+        display: flex;
+        align-items: center;
+        gap: 20px;
 
-        .completedBadge {
+        .back {
 
+        }
+
+        h1 {
+            font-size: 30px;
         }
     }
 
     .testContent {
-        display: flex;
-        height: 100%;
-        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
 
-        .descriptionColumn {
+        .descColumn {
 
+            .testDescription {
+
+            }
         }
 
         .editorColumn {
-            display: flex;
-            flex-direction: column;
-            height: 50%;
+            height: 500px;
 
             .buttons {
 
-                .disabled {
-
-                }
             }
 
             .output {
 
             }
+        }
 
-            .preview {
+        .preview {
 
-
-                .previewFrame {
-
-                }
+            .iframe {
+                height: 100%;
+                width: 100%;
             }
         }
     }

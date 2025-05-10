@@ -47,13 +47,34 @@ const CodeEditor: FC<CodeEditorProps> = ({
                     roundedSelection: false,
                     cursorStyle: 'line-thin',
                     cursorBlinking: 'phase',
-                    quickSuggestions: false,
-                    suggestOnTriggerCharacters: false,
-                    acceptSuggestionOnEnter: "off",
+                    quickSuggestions: true,
+                    suggestOnTriggerCharacters: true,
+                    acceptSuggestionOnEnter: "on",
+                    tabSize: 2,
+                    insertSpaces: true,
+                    wordWrap: 'on',
+                    folding: true,
+                    foldingStrategy: 'indentation',
+                    showFoldingControls: 'always',
+                    matchBrackets: 'always'
+                }}
+                beforeMount={(monaco) => {
+                    monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+                        target: monaco.languages.typescript.ScriptTarget.ESNext,
+                        allowNonTsExtensions: true,
+                        moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+                        module: monaco.languages.typescript.ModuleKind.ESNext,
+                        noEmit: true,
+                        esModuleInterop: true,
+                        jsx: monaco.languages.typescript.JsxEmit.React,
+                        reactNamespace: 'React',
+                        allowJs: true,
+                        typeRoots: ['node_modules/@types']
+                    });
                 }}
             />
         </div>
-    )
-}
+    );
+};
 
 export default CodeEditor;
