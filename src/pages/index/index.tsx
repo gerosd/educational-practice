@@ -1,5 +1,5 @@
 import React, {ReactElement} from "react";
-import styles from "./index.module.scss";
+import styles from "../../assets/styles/modules/index.module.scss";
 import {NavigateFunction, useNavigate} from "react-router-dom";
 
 function Index(): ReactElement {

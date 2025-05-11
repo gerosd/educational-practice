@@ -11,9 +11,9 @@ interface TestHeaderProps {
 export const TestHeader = React.memo(({ testName, isCompleted, onBack, styles }: TestHeaderProps) => (
     <div className={`${styles.testHeader}`}>
         <button className={`${styles.back}`} onClick={onBack}>
-            ← Назад к тестам
+            ←<br/>К тестам
         </button>
+        {isCompleted ? <img src={complete} alt="completed" className={`${styles.done}`} /> : ''}
         <h1>{testName}</h1>
-        {isCompleted && <img src={complete} alt="completed" className="completed-badge" />}
     </div>
 ));

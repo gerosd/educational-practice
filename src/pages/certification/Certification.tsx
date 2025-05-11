@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Certification.module.scss';
+import styles from '../../assets/styles/modules/Certification.module.scss';
 import QuizCard from "./QuizCard";
 
 function Certification(): React.ReactElement {

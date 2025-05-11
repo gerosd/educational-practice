@@ -1,5 +1,7 @@
 import React, {FC} from 'react';
 import Editor from '@monaco-editor/react';
+import {createHighlighter} from "shiki";
+import {shikiToMonaco} from "@shikijs/monaco";
 
 interface CodeEditorProps {
     value: string;
@@ -7,18 +9,28 @@ interface CodeEditorProps {
     language?: string;
 }
 
+const highlighter = await createHighlighter({
+    themes: [
+        'vitesse-dark',
+    ],
+    langs: [
+        'jsx'
+    ],
+});
+
 const CodeEditor: FC<CodeEditorProps> = ({
     value,
     onChange,
-    language = 'javascript'
+    language = 'typescript'
 }) => {
+
     return (
         <div className="monaco-editor" style={{height: '100%', width: "100%"}}>
             <Editor
                 height="100%"
                 width="100%"
                 language={language}
-                theme="vs-dark"
+                theme="vitesse-dark"
                 value={value}
                 onChange={newValue => onChange(newValue || '')}
                 options={{
@@ -27,6 +39,8 @@ const CodeEditor: FC<CodeEditorProps> = ({
                     lineHeight: 18,
                     fontFamily: 'Consolas, monospace',
                     fontLigatures: true,
+                    quickSuggestions: false,
+                    suggestOnTriggerCharacters: false,
                     bracketPairColorization: {
                         enabled: true,
                         independentColorPoolPerBracketType: true
@@ -47,30 +61,42 @@ const CodeEditor: FC<CodeEditorProps> = ({
                     roundedSelection: false,
                     cursorStyle: 'line-thin',
                     cursorBlinking: 'phase',
-                    quickSuggestions: true,
-                    suggestOnTriggerCharacters: true,
-                    acceptSuggestionOnEnter: "on",
+                    acceptSuggestionOnEnter: "off",
                     tabSize: 2,
                     insertSpaces: true,
                     wordWrap: 'on',
                     folding: true,
                     foldingStrategy: 'indentation',
                     showFoldingControls: 'always',
-                    matchBrackets: 'always'
+                    matchBrackets: 'always',
                 }}
                 beforeMount={(monaco) => {
+                    shikiToMonaco(highlighter, monaco)
+
+                    monaco.languages.register({ id: 'jsx' })
+
                     monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-                        target: monaco.languages.typescript.ScriptTarget.ESNext,
+                        target: monaco.languages.typescript.ScriptTarget.Latest,
                         allowNonTsExtensions: true,
                         moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
-                        module: monaco.languages.typescript.ModuleKind.ESNext,
+                        module: monaco.languages.typescript.ModuleKind.CommonJS,
                         noEmit: true,
                         esModuleInterop: true,
                         jsx: monaco.languages.typescript.JsxEmit.React,
-                        reactNamespace: 'React',
+                        reactNamespace: "React",
                         allowJs: true,
-                        typeRoots: ['node_modules/@types']
+                        typeRoots: ["node_modules/@types"],
                     });
+
+                    monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+                        noSemanticValidation: false,
+                        noSyntaxValidation: false,
+                    });
+
+                    monaco.languages.typescript.typescriptDefaults.addExtraLib(
+                        'https://cdn.jsdelivr.net/npm/@types/react@16.9.41/index.d.ts.',
+                        `file:///node_modules/@react/types/index.d.ts`
+                    );
                 }}
             />
         </div>

@@ -1,45 +1,54 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { testsStorage } from '../../../assets/types/testsData';
-import  CodeEditor from './CodeEditor';
+import CodeEditor from './CodeEditor';
 import TestDescription from './TestDescription';
-import { useDebounce } from '../../../assets/hooks/useDebounce';
 import { TestHeader } from './TestHeader';
-import { TestOutput } from './TestOutput';
 import { TestPreview } from './TestPreview';
-import styles from '../Test.module.scss';
+import styles from '../../../assets/styles/modules/Test.module.scss';
+import { getCompletedTests, saveCompletedTest } from '../../../utils/cookieManager';
 
 export function TestPage(): React.ReactElement | null {
     const { testId } = useParams<{ testId: string }>();
     const navigate = useNavigate();
     const [code, setCode] = useState<string>('');
-    const [output, setOutput] = useState<string>('');
     const [isCompleted, setIsCompleted] = useState<boolean>(false);
-    const debouncedCode = useDebounce(code, 1000);
+    const [error, setError] = useState<string>('');
 
     const currentTest = useMemo(() => {
         const id = Number(testId);
         return testsStorage.find(test => test.id === id);
     }, [testId]);
 
+    const nextTestId = useMemo(() => {
+        if (!currentTest) return null;
+        const currentIndex = testsStorage.findIndex(test => test.id === currentTest.id);
+        return currentIndex < testsStorage.length - 1 ? testsStorage[currentIndex + 1].id : null;
+    }, [currentTest]);
+
+    useEffect(() => {
+        if (currentTest?.preInstalledCode) {
+            setCode(currentTest.preInstalledCode);
+        }
+    }, [currentTest]);
+
+    useEffect(() => {
+        if (currentTest) {
+            const completedTests = getCompletedTests();
+            setIsCompleted(completedTests.includes(currentTest.id));
+            currentTest.isCompleted = completedTests.includes(currentTest.id);
+        }
+    }, [currentTest]);
+
     const handleBack = useCallback(() => {
         navigate('/tests');
     }, [navigate]);
 
-    const handleClearOutput = useCallback(() => {
-        setOutput('');
-    }, []);
-
-    const handleConsoleMessage = useCallback((message: string) => {
-        setOutput(prev => {
-            const newOutput = message + '\n';
-            return prev.endsWith(newOutput) ? prev : prev + newOutput;
-        });
-    }, []);
-
-    const handleError = useCallback((error: string) => {
-        setOutput(prev => prev + 'Error: ' + error + '\n');
-    }, []);
+    const handleNextTest = useCallback(() => {
+        if (nextTestId) {
+            navigate(`/test/${nextTestId}`);
+        }
+    }, [nextTestId, navigate]);
 
     const executeUserCode = useCallback((codeToExecute: string): string => {
         try {
@@ -62,39 +71,76 @@ export function TestPage(): React.ReactElement | null {
         }
     }, []);
 
-    const checkTestResult = useCallback((id: number, result: string): boolean => {
-        const expectedResults: Record<number, string> = {
-            1: 'Expected output for test 1',
+    const normalizeCode = (code: string): string => {
+        return code
+            .replace(/\s+/g, ' ')
+            .replace(/\s*{\s*/g, '{')
+            .replace(/\s*}\s*/g, '}')
+            .replace(/\s*\(\s*/g, '(')
+            .replace(/\s*\)\s*/g, ')')
+            .replace(/\s*<\s*/g, '<')
+            .replace(/\s*>\s*/g, '>')
+            .trim();
+    };
+
+    const checkTestResult = useCallback((id: number, userCode: string): boolean => {
+        const testDescriptions: Record<number, { expectedCode: string }> = {
+            1: {
+                expectedCode: `function App() {
+  return (
+    <div>
+      <h1>Hello, React!</h1>
+    </div>
+  );
+}`
+            },
+            2: {
+                expectedCode: `function App() {
+  return (
+    <div>
+      <Greeting name="John" />
+    </div>
+  );
+}
+
+function Greeting() {
+  return <h1>Hello, React!</h1>;
+}`
+            },
         };
 
-        return result.trim() === expectedResults[id]?.trim();
+        const expectedCode = testDescriptions[id]?.expectedCode;
+        if (!expectedCode) return false;
+
+        const normalizedUserCode = normalizeCode(userCode);
+        const normalizedExpectedCode = normalizeCode(expectedCode);
+
+        return normalizedUserCode === normalizedExpectedCode;
     }, []);
 
     const handleRunCode = useCallback(() => {
         try {
-            handleClearOutput();
+            setError('');
             const result = executeUserCode(code);
-            setOutput(result);
 
-            if (currentTest && checkTestResult(currentTest.id, result)) {
+            if (currentTest && checkTestResult(currentTest.id, code)) {
                 setIsCompleted(true);
                 currentTest.isCompleted = true;
+                saveCompletedTest(currentTest.id);
+            } else {
+                setError('Ваш код не соответствует ожидаемому результату. Пожалуйста, проверьте решение.');
             }
         } catch (error) {
-            setOutput(`Error: ${error instanceof Error ? error.message : String(error)}`);
+            setError(`Ошибка: ${error instanceof Error ? error.message : String(error)}`);
         }
-    }, [code, currentTest, executeUserCode, checkTestResult, handleClearOutput]);
+    }, [code, currentTest, executeUserCode, checkTestResult]);
 
     useEffect(() => {
         if (!currentTest) {
             navigate('/tests');
             return;
         }
-
-        if (debouncedCode) {
-            handleRunCode();
-        }
-    }, [debouncedCode, currentTest, navigate, handleRunCode]);
+    }, [currentTest, navigate]);
 
     if (!currentTest) {
         return null;
@@ -121,21 +167,24 @@ export function TestPage(): React.ReactElement | null {
                         language="javascript"
                     />
 
+                    {error && (
+                        <div className={styles.error}>
+                            <p>{error}</p>
+                        </div>
+                    )}
+
                     <div className={`${styles.buttons}`}>
                         <button onClick={handleRunCode}>Запустить код</button>
-                        <button disabled={!isCompleted} className={!isCompleted ? 'disabled' : ''}>
-                            Отправить решение
-                        </button>
+                        {isCompleted && nextTestId && (
+                            <button onClick={handleNextTest} className={styles.nextTest}>
+                                Следующий тест
+                            </button>
+                        )}
                     </div>
-
-                    <TestOutput output={output} styles={styles}/>
                 </div>
                 <div className={`${styles.preview}`}>
                     <TestPreview
                         userCode={code}
-                        onConsoleMessage={handleConsoleMessage}
-                        onClearConsole={handleClearOutput}
-                        onError={handleError}
                         styles={styles}
                     />
                 </div>

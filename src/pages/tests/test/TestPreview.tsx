@@ -2,17 +2,11 @@ import React, {useCallback, useEffect, useRef} from 'react';
 
 interface TestPreviewProps {
     userCode: string;
-    onConsoleMessage: (message: string) => void;
-    onClearConsole: () => void;
-    onError: (error: string) => void;
     styles: Record<string, string>;
 }
 
 export const TestPreview = React.memo(({
     userCode,
-    onConsoleMessage,
-    onClearConsole,
-    onError,
     styles
 }: TestPreviewProps) => {
     const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -24,8 +18,8 @@ export const TestPreview = React.memo(({
 
         const defaultApp = `function App() { 
             return (
-                <div style={{ padding: '20px', color: 'red' }}>
-                    Компонент App не найден. Создан компонент по умолчанию.
+                <div style={{ padding: '20px' }}>
+                    <p>Здесь будет результат вашего кода</p>
                 </div>
             ); 
         }`;
@@ -74,7 +68,8 @@ export const TestPreview = React.memo(({
                     <script src='https://unpkg.com/react-dom@18/umd/react-dom.development.js' crossorigin></script>
                     <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
                     <style>
-                        body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+                        * { margin: 0; padding: 0; box-sizing: border-box; }
+                        body { font-family: Arial, sans-serif; }
                         #root { width: 100vw; height: 100vh; background: #fff; }
                     </style>
                 </head>
@@ -87,7 +82,7 @@ export const TestPreview = React.memo(({
                 </html>
             `);
             iframeDoc.close();
-        }, 150);
+        }, 1000);
 
         return () => clearTimeout(timeoutId);
     }, [getFullCode]);
@@ -95,27 +90,6 @@ export const TestPreview = React.memo(({
     useEffect(() => {
         return updateIframe(userCode);
     }, [userCode, updateIframe]);
-
-    useEffect(() => {
-        const handleMessage = (event: MessageEvent) => {
-            if (!event.data?.type) return;
-
-            switch (event.data.type) {
-                case 'clear':
-                    onClearConsole();
-                    break;
-                case 'console':
-                    onConsoleMessage(event.data.data);
-                    break;
-                case 'error':
-                    onError(event.data.data);
-                    break;
-            }
-        };
-
-        window.addEventListener('message', handleMessage);
-        return () => window.removeEventListener('message', handleMessage);
-    }, [onClearConsole, onConsoleMessage, onError]);
 
     return (
         <iframe

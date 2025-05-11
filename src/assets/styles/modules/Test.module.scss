@@ -1,0 +1,122 @@
+@use "../variables" as *;
+
+.testPage {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 800px;
+    width: 1800px;
+    background: $interactive;
+    padding: 20px;
+    margin-block: 90px;
+
+    .testHeader {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .back {
+            font-size: 18px;
+            padding: 10px 20px;
+        }
+
+        .done {
+            width: 32px;
+            height: 32px;
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+    }
+
+    .testContent {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+        height: 90%;
+
+        .descColumn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: $background;
+            overflow-y: auto;
+            padding: 10px;
+            line-height: 1.6;
+
+            .testDescription {
+                h2 {
+                    text-align: center;
+                    color: $accent;
+                    font-size: 30px;
+                }
+
+                p {
+                    font-size: 20px;
+                    text-align: justify;
+                    white-space: pre-line;
+                }
+            }
+        }
+
+        .editorColumn {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+
+            .error {
+                background: rgba(255, 68, 68, 0.1);
+                padding: 10px;
+                border-radius: 5px;
+                font-size: 14px;
+                position: absolute;
+                bottom: 52px;
+
+                p {
+                    color: #ff4444;
+                }
+            }
+
+            .buttons {
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+
+                button {
+                    padding: 10px 20px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    border: none;
+                    border-radius: 5px;
+                    background: $accent;
+                    color: white;
+                    transition: background 0.2s;
+
+                    &:hover {
+                        background: #7a438d;
+                    }
+
+                    &.nextTest {
+                        background: #4CAF50;
+                        
+                        &:hover {
+                            background: #2d7730;
+                        }
+                    }
+                }
+            }
+        }
+
+        .preview {
+            background: $background;
+            overflow: hidden;
+
+            iframe {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}

@@ -8,6 +8,6 @@ interface TestOutputProps {
 export const TestOutput = React.memo(({ output, styles }: TestOutputProps) => (
     <div className={`${styles.output}`}>
         <h3>Консоль:</h3>
-        <pre>{output || 'Здесь будет результат выполнения вашего кода'}</pre>
+        <p>{output || 'Здесь будет результат выполнения вашего кода'}</p>
     </div>
 ));

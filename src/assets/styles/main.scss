@@ -16,6 +16,27 @@
     box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+    width: 5px;
+    background: $interactive;
+}
+
+::-webkit-scrollbar-track {
+    width: 5px;
+    border-radius: 5px;
+    background: $interactive;
+}
+
+::-webkit-scrollbar-thumb {
+    width: 5px;
+    border-radius: 5px;
+    background: $black;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #000;
+}
+
 #root {
     display: flex;
     flex-direction: column;
