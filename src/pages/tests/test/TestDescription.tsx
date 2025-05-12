@@ -5,11 +5,10 @@ interface TestDescriptionProps {
     styles: Record<string, string>;
 }
 
-const TestDescription: FC<TestDescriptionProps> = ({ testId, styles }) => {
+const TestDescription: FC<TestDescriptionProps> = ({ testId, styles }): React.ReactElement => {
     const testDescriptions: Record<number, { 
         description: string;
         task: string;
-        expectedCode: string;
     }> = {
         1: {
             description: 'React - это библиотека JavaScript, которая используется для создания пользовательского интерфейса, ' +
@@ -21,68 +20,46 @@ const TestDescription: FC<TestDescriptionProps> = ({ testId, styles }) => {
                 'во всем приложении и также упрощает дальнейшую поддержку и обновление приложения. ' +
                 'Этот сайт написан с помощью React. \n\n' +
                 'JSX (JavaScript XML) — это расширение синтаксиса JavaScript, которое позволяет писать разметку прямо в коде. Выглядит это как смесь HTML и JavaScript. ' +
-                'JSX создаёт элементы React. HTML код пишется внутри return()',
-            task: 'Напишите код, который возвращает React-элемент, содержащий заголовок (h1) "Hello, React!"',
-            expectedCode: `function App() {
-  return (
-    <div>
-      {/*Напишите код ниже*/}
-      <h1>Hello, React!</h1>
-      {/*Напишите код выше*/}
-    </div>
-  );
-}`
+                'JSX создаёт элементы React. HTML код пишется внутри return(). Каждый тег должен быть закрыт, т.е. <br> будет выглядеть <br/>',
+            task: 'Напишите код, который возвращает React-элемент, содержащий заголовок первого уровня (h1) "Hello, React!"',
         },
+
         2: {
-            description: '',
+            description: 'Всем тегам в JSX, как и в HTML, можно задать имя класса. Также можно подключать стили - либо импортом в JSX, либо задать стиль HTML тегу. ' +
+                'В этом задании будет рассмотрен 2 вариант.\n\n' +
+                'Для всех атрибутов HTML в JSX применяется camelCase. Так, class (является зарезервированным словом в JS) становится className, onclick становится ' +
+                'onClick и т.п. Если бы в HTML была бы запись <div class="class-name"></div>, то в JSX это будет <div className="className"></div>. \n\n' +
+                'Стили задаются как объекты в JS - <div style={{fontSize: "25px", background: "black"}}></div>. Для всех CSS свойств также применяется camelCase: jusfity-content -> ' +
+                'justifyContent, word-break -> wordBreak.',
             task: 'Для параграфа задайте имя класса "mainText". Также задайте стили - шрифт 18px и цвет текста red (в таком же порядке)',
-            expectedCode: `function App() {
-  return (
-    <div>
-      <p className="mainText" style={{fontSize: '18px', color: 'red'}}>Примените стиль</p>
-      {/*Напишите код выше*/}
-    </div>
-  );        
-}`,
         },
 
         3: {
-            description: 'JSX рендерит как HTML код, так и другой компонент React.',
+            description: 'В React компоненты взаимодействуют друг с другом различными способами, включая передачу компонентов внутри иерархии, рендеринг ' +
+                'динамических списков элементов, обработку состояния и управление жизненным циклом приложения. Один из основных способов взаимодействия — ' +
+                'композиция компонентов, когда один компонент включает другой непосредственно в своем коде. ' +
+                'JSX рендерит как HTML код, так и другой компонент React. При вызове другого компонента внутри return() следует писать так: ' +
+                '<Component />. Тег компонента обязательно должен быть закрыт.\n\n' +
+                'Используется эта возможность для разбиения приложения на компоненты, упрощения чтения кода, а также для повторности использования этих компонентов. ' +
+                'Отрендерить компонент можно сколько угодно раз.',
             task: 'Создайте компонент Greeting(напишите его выше App) внутри него создайте заголовок первого уровня с надписью "Hello, User!", а после передайте его в App',
-            expectedCode: `{/*Добавьте компонент ниже (отступ в 1 строку между компонентами)*/}
-function Greeting() {
-  return(
-    <h1>Hello, User!</h1>
-  );
-}
-
-function App() {
-  return (
-    <div>
-      {/*Напишите код ниже*/}
-      <Greeting />
-      {/*Напишите код выше*/}
-    </div>
-  );
-}`,
         },
 
         4: {
-            description: 'Изучите создание компонентов и передачу props.',
+            description: 'Компонентам React можно передавать переменные либо функции с помощью props (properties). Выглядит это так: ' +
+                '<Component variable={x} function={func} />.\n' +
+                'Получить props в дочернем компоненте: function Component({variable, function}){return(<p>{variable}</p>)}. Вместо variable и function можно написать любые имена. ' +
+                'Компонент не может менять свои props, но может отвечать за изменение props своих дочерних компонентов.',
             task: 'Создайте компонент Greeting(напишите его выше App), который принимает prop "name" и выводит "Hello, {name}!". В name передайте строку "React"',
-            expectedCode: `function Greeting({ name }) {
-  return <h1>Hello, {name}!</h1>;
-}
-
-function App() {
-  return (
-    <div>
-      <Greeting name="John" />
-    </div>
-  );
-}`
         },
 
+        5: {
+            description: 'В React также существует состояние компонента - state. Его отличие в том, что он находится внутри компонента, тогда как props передается в компонент. ' +
+                'State появляется с установки его значения по умолчанию в момент рендера компонента на странице, а далее допускает свое изменение.\n' +
+                'State объявляется так: const [value, setValue] = useState(0);, где вместо 0 может быть любое значение по умолчанию. Компонент сам управляет своим состоянием ' +
+                'и не управляет состоянием дочерних компонентов.',
+            task: '',
+        },
 
     };
 

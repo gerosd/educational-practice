@@ -107,6 +107,45 @@ export function TestPage(): React.ReactElement | null {
   );        
 }`
             },
+
+            3: {
+                expectedCode: `{/*Добавьте компонент ниже (отступ в 1 строку между компонентами)*/}
+function Greeting() {
+  return(
+    <h1>Hello, User!</h1>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      {/*Напишите код ниже*/}
+      <Greeting />
+      {/*Напишите код выше*/}
+    </div>
+  );
+}`
+            },
+
+            4: {
+                expectedCode: `function Greeting({ name }) {
+  return <h1>Hello, {name}!</h1>;
+}
+
+function App() {
+  return (
+    <div>
+      <Greeting name="React" />
+    </div>
+  );
+}`
+            },
+
+            5: {
+                expectedCode: `function App() {
+  
+}`
+            }
         };
 
         const expectedCode = testDescriptions[id]?.expectedCode;

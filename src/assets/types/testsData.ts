@@ -41,6 +41,7 @@ export const testsStorage: TestInterface[] = [
         name: "Рендер дочернего компонента",
         isCompleted: false,
         preInstalledCode: `{/*Добавьте компонент ниже (отступ в 1 строку между компонентами)*/}
+
 function App() {
   return (
     <div>
@@ -90,7 +91,7 @@ function App() {
 
     {
         id: 10,
-        name: "Работа с формами",
+        name: "Работа с полями ввода",
         isCompleted: false,
     },
 ];

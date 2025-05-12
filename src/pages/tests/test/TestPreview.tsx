@@ -69,7 +69,7 @@ export const TestPreview = React.memo(({
                     <script src='https://unpkg.com/@babel/standalone/babel.min.js'></script>
                     <style>
                         * { margin: 0; padding: 0; box-sizing: border-box; }
-                        body { font-family: Arial, sans-serif; }
+                        body { font-family: Arial, sans-serif; text-align: center; }
                         #root { width: 100vw; height: 100vh; background: #fff; }
                     </style>
                 </head>
