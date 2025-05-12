@@ -50,6 +50,10 @@ export function TestPage(): React.ReactElement | null {
         }
     }, [nextTestId, navigate]);
 
+    const handleNavigateToTests = (): void => {
+        navigate(`/certification`);
+    }
+
     const executeUserCode = useCallback((codeToExecute: string): string => {
         try {
             const func = new Function(`
@@ -129,13 +133,15 @@ function App() {
 
             4: {
                 expectedCode: `function Greeting({ name }) {
-  return <h1>Hello, {name}!</h1>;
+  return <h1>Hello, {name}!</h1>; {/*Между , и ! вставьте проп*/}
 }
 
 function App() {
   return (
     <div>
-      <Greeting name="React" />
+      {/*Напишите код ниже*/}
+      <Greeting name="React"/>
+      {/*Напишите код выше*/}
     </div>
   );
 }`
@@ -143,7 +149,98 @@ function App() {
 
             5: {
                 expectedCode: `function App() {
+  {/*Напишите код ниже*/}
+  const [count, setCount] = useState(0);
+    
+    const increment = () => {
+      setCount(count + 1);
+    };
+  {/*Напишите код выше*/}
   
+  return (
+    <>
+      <h2>Счетчик: {count}</h2>
+      <button onClick={increment}>Увеличить на 1</button>
+    </>
+  );
+}`
+            },
+
+            6: {
+                expectedCode: `function App() {
+  {/*Напишите код ниже*/}
+  const [seconds, setSeconds] = useState(0);
+  
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setSeconds((prevSeconds) => prevSeconds + 1);
+    }, 1000);
+  }, []);
+  {/*Напишите код выше*/}
+  return (
+    <div>
+      <p>Прошло: {seconds} секунд</p> {/*В этой строке передайте seconds после :*/}
+    </div>
+  );   
+}`
+            },
+
+            7: {
+                expectedCode: `function App() {
+  const users = [{ id: '1', name: 'Maria' }, { id: '2', name: 'Bob' }, { id: '3', name: 'Kate' }];
+
+  return (
+    <ul>
+    {
+      //Напишите код ниже
+      users.map((user) => 
+        <li key={user.id}>{user.name}</li>
+      )
+      //Напишите код выше
+    }
+    </ul>
+  )
+}`
+            },
+
+            8: {
+                expectedCode: `function App() {
+  const [a, setA] = useState(0);
+  const [b, setB] = useState(0);
+  const [count, setCount] = useState(0);
+  //Оптимизируйте константу с помощью useMemo
+  const sum = useMemo(() => {
+    return a + b;
+  }, [a, b]);
+
+  return (
+    <div>
+      <h1>Результат сложения строк: {sum}</h1>
+      <p>Количество кликов: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Кликнуть</button>
+      <input type="number" value={a} onChange={(e) => setA(e.target.value)} />
+      <input type="number" value={b} onChange={(e) => setB(e.target.value)} />
+    </div>
+  );
+}`
+            },
+
+            9: {
+                expectedCode: ``
+            },
+
+            10: {
+                expectedCode: `function App() {
+  const [name, setName] = useState('');
+  
+  return (
+    <div>
+      <h2>{name}</h2>
+      {/*Напишите код ниже*/}
+      <input value={name} onChange={e => setName(e.target.value)}/>
+      {/*Напишите код выше*/}
+    </div>
+  )            
 }`
             }
         };
@@ -217,6 +314,11 @@ function App() {
                         {isCompleted && nextTestId && (
                             <button onClick={handleNextTest} className={styles.nextTest}>
                                 Следующий тест
+                            </button>
+                        )}
+                        {isCompleted && !nextTestId && (
+                            <button onClick={handleNavigateToTests} className={styles.nextTest}>
+                                К аттестации
                             </button>
                         )}
                     </div>

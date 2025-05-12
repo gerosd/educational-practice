@@ -27,6 +27,9 @@ export const TestPreview = React.memo(({
         return `
             window.React = React;
             window.ReactDOM = ReactDOM;
+            window.useState = React.useState;
+            window.useEffect = React.useEffect;
+            window.useMemo = React.useMemo;
             
             ${!hasAppComponent ? defaultApp : ''}
             ${code}
