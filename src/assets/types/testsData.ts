@@ -28,7 +28,9 @@ export const testsStorage: TestInterface[] = [
         preInstalledCode: `function App() {
   return (
     <div>
-        <p>Примените стиль</p>
+      {/*Напишите код ниже*/}
+      <p>Примените стиль</p>
+      {/*Напишите код выше*/}
     </div>
   );        
 }`

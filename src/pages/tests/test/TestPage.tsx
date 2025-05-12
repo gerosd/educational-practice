@@ -89,7 +89,9 @@ export function TestPage(): React.ReactElement | null {
                 expectedCode: `function App() {
   return (
     <div>
+      {/*Напишите код ниже*/}
       <h1>Hello, React!</h1>
+      {/*Напишите код выше*/}
     </div>
   );
 }`
@@ -98,13 +100,11 @@ export function TestPage(): React.ReactElement | null {
                 expectedCode: `function App() {
   return (
     <div>
-      <Greeting name="John" />
+      {/*Напишите код ниже*/}
+      <p className="mainText" style={{fontSize: '18px', color: 'red'}}>Примените стиль</p>
+      {/*Напишите код выше*/}
     </div>
-  );
-}
-
-function Greeting() {
-  return <h1>Hello, React!</h1>;
+  );        
 }`
             },
         };
@@ -174,7 +174,7 @@ function Greeting() {
                     )}
 
                     <div className={`${styles.buttons}`}>
-                        <button onClick={handleRunCode}>Запустить код</button>
+                        <button onClick={handleRunCode}>Проверить решение</button>
                         {isCompleted && nextTestId && (
                             <button onClick={handleNextTest} className={styles.nextTest}>
                                 Следующий тест

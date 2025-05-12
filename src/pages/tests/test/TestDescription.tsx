@@ -39,7 +39,8 @@ const TestDescription: FC<TestDescriptionProps> = ({ testId, styles }) => {
             expectedCode: `function App() {
   return (
     <div>
-      <p className="mainText" style="{{fontSize: '18px', color: 'red'}}">Примените стиль</p>
+      <p className="mainText" style={{fontSize: '18px', color: 'red'}}>Примените стиль</p>
+      {/*Напишите код выше*/}
     </div>
   );        
 }`,
