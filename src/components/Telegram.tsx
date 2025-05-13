@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../assets/styles/modules/tg.module.scss';
-import tgImg from '../assets/Telegram_2019_Logo.svg.png';
+import tgImg from '../assets/Telegram_2019_Logo.svg';
 
 function Telegram(): React.ReactElement {
     return (

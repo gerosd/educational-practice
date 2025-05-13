@@ -98,7 +98,6 @@ const CodeEditor: FC<CodeEditorProps> = ({
                         `file:///node_modules/@react/types/index.d.ts`
                     );
 
-                    // Add React hooks to global scope
                     monaco.languages.typescript.typescriptDefaults.addExtraLib(
                         `
                         declare const useState: typeof React.useState;

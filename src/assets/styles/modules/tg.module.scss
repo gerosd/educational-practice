@@ -4,14 +4,15 @@
     position: fixed;
     width: 64px;
     height: 64px;
-    bottom: 30px;
+    bottom: 120px;
     right: 30px;
     cursor: pointer;
+    z-index: 1000;
 
     @media (max-width: 1024px) {
         width: 32px;
         height: 32px;
-        bottom: 20px;
+        bottom: 110px;
         right: 20px;
     }
 

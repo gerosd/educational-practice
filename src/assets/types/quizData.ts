@@ -14,7 +14,7 @@ export const quizStorage: QuizTests[] = [
             'function Component() { return <div>Hello</div>; }',
             'class Component extends React { render() { return "Hello"; } }',
             'const Component = () => { <div>Hello</div> };',
-            'React.createComponent(<div>Hello</div>);'
+            'React.createComponent(<div> Hello </div>);'
         ],
         answer: 1
     },
@@ -58,7 +58,7 @@ export const quizStorage: QuizTests[] = [
     {
         id: 5,
         question: "Как исправить ошибку \"Cannot read property 'map' of undefined\"?",
-        code: "const items = null;" +
+        code: "const items = null;\n" +
             "return items.map(...);",
         options: [
             '',
@@ -147,7 +147,7 @@ export const quizStorage: QuizTests[] = [
         question: "Как динамически добавить класс в className?",
         code: "const [isActive, setIsActive] = useState(false);",
         options: [
-            '<div className={isActive ? "active" : ""}>',
+            '<div classname={isActive ? "active" : ""}>',
             '<div class={isActive && "active"}>',
             '<div className={isActive ? "active" : ""}>',
             '<div style={isActive ? "active" : null}>',

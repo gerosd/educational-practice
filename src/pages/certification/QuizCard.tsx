@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
-import { QuizTests, quizStorage } from '../../assets/types/quizData';
+import React, { useState} from 'react';
+import { quizStorage } from '../../assets/types/quizData';
+import { achievements } from '../../assets/types/achievements';
+import {getAchievements, saveAchievement} from '../../utils/achievementManager';
 import checkIcon from '../../assets/complete.svg';
+import {AchievementDisplay} from "../../components/AchievementDisplay";
 
 interface QuizProps {
     styles: Record<string, string>;
@@ -15,42 +18,45 @@ function QuizCard( {styles}: QuizProps ): React.ReactElement {
     const [correctAnswers, setCorrectAnswers] = useState<number>(0);
     const [quizCompleted, setQuizCompleted] = useState(false);
     const [answersTracker, setAnswersTracker] = useState<Map<number, number>>(new Map());
-    
+
     const currentQuestion = quizStorage[currentQuestionIndex];
     const progress = ((currentQuestionIndex + 1) / quizStorage.length) * 100;
     const isLastQuestion = currentQuestionIndex === quizStorage.length - 1;
-    const passedThreshold = correctAnswers >= 13;
-    
+
     const handleOptionClick = (optionIndex: number) => {
         const currentCorrectOption = currentQuestion.answer - 1;
         const previousAnswer = answersTracker.get(currentQuestionIndex);
-        
+
         if (selectedAnswer !== null && selectedAnswer !== optionIndex) {
             if (previousAnswer === currentCorrectOption && optionIndex !== currentCorrectOption) {
                 setCorrectAnswers(prev => prev - 1);
-            } 
+            }
             else if (previousAnswer !== currentCorrectOption && optionIndex === currentCorrectOption) {
                 setCorrectAnswers(prev => prev + 1);
             }
-        } 
+        }
         else if (selectedAnswer === null) {
             if (optionIndex === currentCorrectOption) {
                 setCorrectAnswers(prev => prev + 1);
             }
         }
-        
+
         setAnswersTracker(prev => new Map(prev).set(currentQuestionIndex, optionIndex));
         setSelectedAnswer(optionIndex);
     };
-    
+
     const handleNextQuestion = () => {
-        if (currentQuestionIndex < quizStorage.length - 1) {
+        if (!isLastQuestion) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
             setSelectedAnswer(null);
         } else {
             setQuizCompleted(true);
             if (correctAnswers >= 13) {
                 setShowEmailForm(true);
+                const quizMasterAchievement = achievements.find(a => a.id === 'quiz_master');
+                if (quizMasterAchievement && !getAchievements().some(a => a.id === 'quiz_master')) {
+                    saveAchievement(quizMasterAchievement);
+                }
             }
         }
     };
@@ -63,7 +69,6 @@ function QuizCard( {styles}: QuizProps ): React.ReactElement {
         e.preventDefault();
         if (email) {
             setSubmitted(true);
-            console.log('Certificate request submitted for:', email);
         }
     };
 
@@ -81,19 +86,19 @@ function QuizCard( {styles}: QuizProps ): React.ReactElement {
                 <>
                     <h2 className={styles.quizCount}>{currentQuestionIndex + 1} / {quizStorage.length}</h2>
                     <h2 className={styles.quizName}>{currentQuestion.question}</h2>
-                    {currentQuestion.code && <pre>{currentQuestion.code}</pre>}
+                    {currentQuestion.code && <p>{currentQuestion.code}</p>}
                     <div className={styles.quizOptions}>
                         {currentQuestion.options.map((option, index) => (
-                            <div 
-                                key={index} 
+                            <div
+                                key={index}
                                 className={`${styles.quizOption} ${selectedAnswer === index ? styles.selected : ''}`}
                                 onClick={() => handleOptionClick(index)}
                             >
-                                {option}
+                                <p className={styles.option}>{option}</p>
                                 {selectedAnswer === index && (
-                                    <img 
-                                        src={checkIcon} 
-                                        alt="Selected" 
+                                    <img
+                                        src={checkIcon}
+                                        alt="Selected"
                                         className={styles.checkmark}
                                     />
                                 )}
@@ -101,8 +106,8 @@ function QuizCard( {styles}: QuizProps ): React.ReactElement {
                         ))}
                     </div>
                     {selectedAnswer !== null && (
-                        <button 
-                            className={styles.nextButton} 
+                        <button
+                            className={styles.nextButton}
                             onClick={handleNextQuestion}
                         >
                             {isLastQuestion ? 'Завершить тест' : 'Следующий вопрос'}
@@ -118,18 +123,19 @@ function QuizCard( {styles}: QuizProps ): React.ReactElement {
                         <div className={styles.thankYouMessage}>
                             <h3>Спасибо за прохождение теста!</h3>
                             <p>Сертификат будет отправлен на указанный email: {email}</p>
+                            <p>При обновлении страницы вам будет выдано достижение</p>
                         </div>
                     ) : (
                         <form className={styles.emailForm} onSubmit={handleSubmit}>
                             <h3>Поздравляем! Вы успешно прошли тест!</h3>
                             <p className={styles.resultInfo}>Правильных ответов: {correctAnswers} из {quizStorage.length}</p>
                             <p>Введите email для получения сертификата:</p>
-                            <input 
-                                type="email" 
-                                value={email} 
-                                onChange={handleEmailChange} 
-                                placeholder="Ваш email" 
-                                required 
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={handleEmailChange}
+                                placeholder="Ваш email"
+                                required
                                 className={styles.emailInput}
                             />
                             <button type="submit" className={styles.submitButton}>
@@ -143,8 +149,8 @@ function QuizCard( {styles}: QuizProps ): React.ReactElement {
                         <p className={styles.resultInfo}>Правильных ответов: {correctAnswers} из {quizStorage.length}</p>
                         <p>Для получения сертификата необходимо набрать минимум 13 правильных ответов.</p>
                         <p>Рекомендуем повторить изученные темы и попробовать снова.</p>
-                        <button 
-                            className={styles.restartButton} 
+                        <button
+                            className={styles.restartButton}
                             onClick={restartQuiz}
                         >
                             Начать заново
