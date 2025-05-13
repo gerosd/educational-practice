@@ -1,7 +1,7 @@
 export interface QuizTests {
     id: number;
     question: string;
-    code?: "";
+    code?: string;
     options: [string, string, string, string];
     answer: number;
 }
@@ -61,7 +61,10 @@ export const quizStorage: QuizTests[] = [
         code: "const items = null;" +
             "return items.map(...);",
         options: [
-
+            '',
+            '',
+            '',
+            '',
         ],
         answer: 1
     },
@@ -118,12 +121,25 @@ export const quizStorage: QuizTests[] = [
     {
         id: 10,
         question: "Как обработать отправку формы?",
-
+        options: [
+            '',
+            '',
+            '',
+            '',
+        ],
+        answer: 3
     },
 
     {
         id: 11,
-
+        question: "",
+        options: [
+            '',
+            '',
+            '',
+            '',
+        ],
+        answer: 2
     },
 
     {
@@ -141,8 +157,14 @@ export const quizStorage: QuizTests[] = [
 
     {
         id: 13,
-        question: "",
-
+        question: "Как правильно использовать useEffect?",
+        options: [
+            'useEffect(() => { ... }, [deps]);',
+            'const useEffect = () => { ... };',
+            'useEffect([deps], () => { ... });',
+            'useEffect({ ... }, [deps]);',
+        ],
+        answer: 1
     },
 
     {

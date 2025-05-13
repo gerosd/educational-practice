@@ -5,6 +5,7 @@
     flex-direction: column;
     align-items: center;
     gap: 80px;
+    margin-block: 60px;
 
     .desc {
         font-size: 24px;
@@ -17,8 +18,9 @@
         align-items: center;
         background: $interactive;
         width: 100%;
-        height: 500px;
-        padding-block: 10px;
+        min-height: 555px;
+        padding: 30px 20px;
+        position: relative;
 
         .quizName {
             margin-top: 20px;
@@ -36,21 +38,151 @@
             justify-content: space-between;
             width: 650px;
             margin-top: 50px;
+            gap: 15px;
 
             .quizOption {
                 display: flex;
+                align-items: center;
+                justify-content: space-between;
                 width: 100%;
-                height: 40px;
+                height: 50px;
                 background: $black;
+                padding: 0 20px;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                position: relative;
+
+                &:hover {
+                    background: #856794;
+                }
+
+                &.selected {
+                    background: #7a438d;
+                }
+                
+                .checkmark {
+                    width: 24px;
+                    height: 24px;
+                    margin-left: 10px;
+                }
             }
         }
 
         .progressBar {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
             background: $gray;
+            width: 650px;
+            height: 10px;
+            border-radius: 10px;
 
             .progressThumb {
                 background: $accent;
+                height: 100%;
+                border-radius: 10px;
+                transition: width 0.3s ease-in-out;
             }
+        }
+        
+        .nextButton, .restartButton {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: $accent;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            
+            &:hover {
+                background: #7a438d;
+            }
+        }
+        
+        .emailForm {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 650px;
+            gap: 20px;
+            margin-top: 30px;
+            
+            h3 {
+                font-size: 24px;
+                text-align: center;
+                color: $accent;
+            }
+            
+            .emailInput {
+                width: 100%;
+                padding: 12px;
+                font-size: 16px;
+                border: 1px solid $gray;
+                border-radius: 5px;
+            }
+            
+            .submitButton {
+                padding: 12px 25px;
+                background: $accent;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background 0.2s ease;
+                
+                &:hover {
+                    background: #7a438d;
+                }
+            }
+        }
+        
+        .thankYouMessage, .failMessage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+            text-align: center;
+            width: 650px;
+            
+            h3 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            p {
+                font-size: 18px;
+                margin-bottom: 5px;
+            }
+        }
+
+        .thankYouMessage h3 {
+            color: $accent;
+        }
+
+        .failMessage h3 {
+            color: #e74c3c;
+        }
+
+        .resultInfo {
+            font-weight: bold;
+            font-size: 20px !important;
+            margin: 15px 0 !important;
+        }
+
+        pre {
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            width: 650px;
+            overflow-x: auto;
+            font-family: monospace;
         }
     }
 }
