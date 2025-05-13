@@ -30,7 +30,9 @@ const TestDescription: FC<TestDescriptionProps> = ({ testId, styles }): React.Re
                 'Для всех атрибутов HTML в JSX применяется camelCase. Так, class (является зарезервированным словом в JS) становится className, onclick становится ' +
                 'onClick и т.п. Если бы в HTML была бы запись <div class="class-name"></div>, то в JSX это будет <div className="className"></div>. \n\n' +
                 'Стили задаются как объекты в JS - <div style={{fontSize: "25px", background: "black"}}></div>. Для всех CSS свойств также применяется camelCase: jusfity-content -> ' +
-                'justifyContent, word-break -> wordBreak.',
+                'justifyContent, word-break -> wordBreak.' +
+                'Классы можно задавать через тернарный оператор: \n\n' +
+                '<div className={isActive? "active", ""}></div>',
             task: 'Для параграфа задайте имя класса "mainText". Также задайте стили - шрифт 18px и цвет текста red (в таком же порядке)',
         },
 
@@ -106,8 +108,12 @@ const TestDescription: FC<TestDescriptionProps> = ({ testId, styles }): React.Re
         },
 
         9: {
-            description: '',
-            task: '',
+            description: 'Что если вам нужно отобразить компонент только тогда, когда какое-либо условие истино? Для этого в React применяют ' +
+                'условный рендеринг. Он записывается в {} скобках внутри return. Подходит как обычный if, так и тернарный оператор, а также структура:\n\n' +
+                '{condition && (<Component />)}\n\n' +
+                'Условным рендерингом можно отображать HTML теги, либо же целые компоненты React.',
+            task: 'Отобразите заголовок первого уровня, который содержит имя, только тогда, когда переменная isNewUser = true. Используйте тернарный оператор, где ' +
+                'ложное условие записывается как " ".',
         },
 
         10: {

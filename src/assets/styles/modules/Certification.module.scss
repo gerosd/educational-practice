@@ -1,6 +1,10 @@
 @use "../variables" as *;
 
 .certification {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
 
     .desc {
         font-size: 24px;
@@ -8,6 +12,38 @@
     }
 
     .quizCard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: $interactive;
+        width: 100%;
+        height: 500px;
+        padding-block: 10px;
+
+        .quizName {
+            margin-top: 20px;
+        }
+
+        .quizCount, .quizName {
+            font-size: 22px;
+            font-weight: 500
+        }
+
+        .quizOptions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            width: 650px;
+            margin-top: 50px;
+
+            .quizOption {
+                display: flex;
+                width: 100%;
+                height: 40px;
+                background: $black;
+            }
+        }
 
         .progressBar {
             background: $gray;
@@ -15,11 +51,6 @@
             .progressThumb {
                 background: $accent;
             }
-        }
-
-        .quizCount, .quizName {
-            font-size: 22px;
-            font-weight: 500
         }
     }
 }

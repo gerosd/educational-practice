@@ -9,6 +9,7 @@ import PageNotFound from "./pages/pagesNotFound/PageNotFound";
 import Tests from "./pages/tests/Tests";
 import "./assets/styles/main.scss";
 import {TestPage} from "./pages/tests/test/TestPage";
+import Telegram from './components/Telegram';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Failed to find the root element');
@@ -27,6 +28,7 @@ root.render(
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>
         </BrowserRouter>
+        <Telegram />
         <Footer/>
     </StrictMode>,
 )

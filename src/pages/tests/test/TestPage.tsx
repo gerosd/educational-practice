@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import {NavigateFunction, useNavigate, useParams} from "react-router-dom";
 import { testsStorage } from '../../../assets/types/testsData';
 import CodeEditor from './CodeEditor';
 import TestDescription from './TestDescription';
@@ -10,29 +10,29 @@ import { getCompletedTests, saveCompletedTest } from '../../../utils/cookieManag
 
 export function TestPage(): React.ReactElement | null {
     const { testId } = useParams<{ testId: string }>();
-    const navigate = useNavigate();
+    const navigate: NavigateFunction = useNavigate();
     const [code, setCode] = useState<string>('');
     const [isCompleted, setIsCompleted] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
 
     const currentTest = useMemo(() => {
-        const id = Number(testId);
+        const id: number = Number(testId);
         return testsStorage.find(test => test.id === id);
     }, [testId]);
 
-    const nextTestId = useMemo(() => {
+    const nextTestId: number | null = useMemo(() => {
         if (!currentTest) return null;
-        const currentIndex = testsStorage.findIndex(test => test.id === currentTest.id);
+        const currentIndex: number = testsStorage.findIndex(test => test.id === currentTest.id);
         return currentIndex < testsStorage.length - 1 ? testsStorage[currentIndex + 1].id : null;
     }, [currentTest]);
 
-    useEffect(() => {
+    useEffect((): void => {
         if (currentTest?.preInstalledCode) {
             setCode(currentTest.preInstalledCode);
         }
     }, [currentTest]);
 
-    useEffect(() => {
+    useEffect((): void => {
         if (currentTest) {
             const completedTests = getCompletedTests();
             setIsCompleted(completedTests.includes(currentTest.id));
@@ -226,7 +226,18 @@ function App() {
             },
 
             9: {
-                expectedCode: ``
+                expectedCode: `function App() {
+  const isNewUser = true; //поменяйте флаг на true
+  const userName = "User";
+  
+  return(
+    <div>
+      {/*Напишите код ниже*/}
+      {isNewUser ? (<h1>{userName}</h1>) : ""}
+      {/*Напишите код выше*/}
+    </div>
+  );                
+}`
             },
 
             10: {

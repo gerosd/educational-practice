@@ -2,7 +2,7 @@ export interface TestInterface {
     id: number;
     name: string;
     isCompleted: boolean;
-    preInstalledCode?: string;
+    preInstalledCode: string;
 }
 
 export const testsStorage: TestInterface[] = [
@@ -158,7 +158,18 @@ function App() {
         id: 9,
         name: "Условный рендеринг",
         isCompleted: false,
-        preInstalledCode: ``
+        preInstalledCode: `function App() {
+  const isNewUser = false; //поменяйте флаг на true
+  const userName = "User";
+  
+  return(
+    <div>
+      {/*Напишите код ниже*/}
+      
+      {/*Напишите код выше*/}
+    </div>
+  );                
+}`
     },
 
     {

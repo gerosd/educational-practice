@@ -5,7 +5,7 @@
     flex-direction: column;
     gap: 5px;
     height: 800px;
-    width: 1800px;
+    width: 95%;
     background: $interactive;
     padding: 20px;
     margin-block: 90px;
@@ -36,6 +36,10 @@
         gap: 10px;
         height: 90%;
 
+        @media (max-width: 1024px) {
+            display: block;
+        }
+
         .descColumn {
             display: flex;
             flex-direction: column;
@@ -65,6 +69,11 @@
             flex-direction: column;
             gap: 10px;
             position: relative;
+
+            @media (max-width: 1024px) {
+                display: none;
+                width: 0;
+            }
 
             .error {
                 background: rgba(255, 68, 68, 0.1);
@@ -112,6 +121,11 @@
         .preview {
             background: $background;
             overflow: hidden;
+
+            @media (max-width: 1024px) {
+                display: none;
+                width: 0;
+            }
 
             iframe {
                 width: 100%;
