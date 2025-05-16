@@ -2,7 +2,10 @@ export interface QuizTests {
     id: number;
     question: string;
     code?: string;
-    options: [string, string, string, string];
+    options: [string,
+        string,
+        string,
+        string];
     answer: number;
 }
 

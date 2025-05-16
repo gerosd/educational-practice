@@ -3,7 +3,6 @@ import { quizStorage } from '../../assets/types/quizData';
 import { achievements } from '../../assets/types/achievements';
 import {getAchievements, saveAchievement} from '../../utils/achievementManager';
 import checkIcon from '../../assets/complete.svg';
-import {AchievementDisplay} from "../../components/AchievementDisplay";
 
 interface QuizProps {
     styles: Record<string, string>;

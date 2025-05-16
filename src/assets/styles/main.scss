@@ -38,13 +38,13 @@
 }
 
 #root {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    align-items: center;
-    justify-content: space-between;
-    background: $background;
-    position: relative;
+    display: flex; //режим отображения дочерних элементов внутри #root
+    flex-direction: column; //направление главной оси flex-контейнера
+    min-height: 100vh; //минимальная высота контейнера
+    align-items: center; //выравнивание относительно побочной оси flex-контейнера
+    justify-content: space-between; //выравнивание относительно главной оси flex-контейнера
+    background: $background; //цвет фона. Указан с помощью переменной SCSS
+    position: relative; //относительное позиционирование
 
     &::before {
         content: "";
