@@ -64,12 +64,12 @@ export const quizStorage: QuizTests[] = [
         code: "const items = null;\n" +
             "return items.map(...);",
         options: [
-            '',
-            '',
-            '',
-            '',
+            'Заменить null на undefined',
+            'Заменить null на []',
+            'Заменить null на 0',
+            'Заменить null на ""',
         ],
-        answer: 1
+        answer: 2
     },
 
     {
@@ -111,36 +111,36 @@ export const quizStorage: QuizTests[] = [
 
     {
         id: 9,
-        question: "",
+        question: "Что такое React?",
         options: [
-            '',
-            '',
-            '',
-            '',
+            'Надстройка над JavaScript',
+            'Фреймворк',
+            'Библиотека',
+            'Язык программирования',
         ],
         answer: 3
     },
 
     {
         id: 10,
-        question: "Как обработать отправку формы?",
+        question: "Возможен ли условный рендеринг в React?",
         options: [
-            '',
-            '',
-            '',
-            '',
+            'Нет',
+            'Да, но разрешен только if',
+            'Да, используя if, && или тернарный оператор',
+            'Да, но разрешен только && и тернарный оператор',
         ],
         answer: 3
     },
 
     {
         id: 11,
-        question: "",
+        question: "Как правильно работать с <input> в React?",
         options: [
-            '',
-            '',
-            '',
-            '',
+            'Задать атрибут defaultValue',
+            'Использовать атрибуты value и onChange',
+            'Использовать props',
+            'React не предоставляет работу с <input>',
         ],
         answer: 2
     },
